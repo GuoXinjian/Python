@@ -47,7 +47,6 @@ def get_random_ip(proxy_ip):
         proxies = {'https': proxy_ip}
     return proxies
 
-
 class User_Weibo():#一个实例=一个账号
 
     def __init__(self,userid=None,proxy=None,cookies=None,headers=None,**userdata):    #type(userdata)==json,如果传入data，则不再发起请求
