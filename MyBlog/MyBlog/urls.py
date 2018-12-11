@@ -24,6 +24,7 @@ urlpatterns = [
 from django.conf.urls import url
 from . import view,testdb,search,search2
 from django.contrib import admin
+from TestModel import views as TestModel_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -32,4 +33,5 @@ urlpatterns = [
     url(r'^search-form$', search.search_form),
     url(r'^search$', search.search),
     url(r'^search-post$', search2.search_post),
+    url(r'^$',TestModel_views.home,name='home'),
 ]
