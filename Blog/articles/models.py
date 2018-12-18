@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 from tinymce.models import HTMLField
 import tinymce
 # Create your models here.
@@ -11,7 +11,8 @@ class Column(models.Model):
 
     def __str__(self):
         return self.name
-    
+    def get_absolute_url(self):
+        return reverse('column',args=(self.slug,))
     class Meta:
         db_table='column'
         verbose_name = '栏目'
@@ -35,7 +36,8 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
-    
+    def get_absolute_url(self):
+        return reverse('article', args=(self.slug,))
     class Meta:
         db_table='article'
         verbose_name = '文章'
