@@ -8,7 +8,7 @@ class User(models.Model):
     )
 
     name = models.CharField(max_length = 256,verbose_name='用户名')
-    password = models.CharField(max_length = 256，verbose='密码')
+    password = models.CharField(max_length = 256,verbose_name='密码')
     email = models.EmailField(unique=True)
     sex = models.CharField(max_length=32, choices=gender,default='男')
     c_time = models.DateField(auto_now_add=True)
