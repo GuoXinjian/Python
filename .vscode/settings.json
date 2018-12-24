@@ -1,4 +1,4 @@
 {
     "python.pythonPath": "C:\\Users\\follo\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
-    "python.linting.pylintEnabled": false
+    "files.autoSave": "afterDelay"
 }
