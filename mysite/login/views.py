@@ -8,7 +8,7 @@ def hash_code(s,salt='mysite'):
     h = hashlib.sha256()
     s += salt
     h.update(s.encode())
-    return h.hexdiigest()
+    return h.hexdigest()
 
 
 def index(request):
