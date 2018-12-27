@@ -48,9 +48,24 @@ class Solution:
         :type num: int
         :rtype: str
         """
+        res=''
+        dic = ['I','V','X','L','C','D','M']
+        i=1
         while num>0:
             t=num%10
-            
+            tmp = ''
+            if t==9:
+                tmp = dic[2*i-2]+dic[2*i]
+            elif t>=5:
+                tmp = dic[2*i-1]+dic[2*i-2]*(t-5)
+            elif t>3:
+                tmp = dic[2*i-2]+dic[2*i-1]
+            else:
+                tmp = dic[2*i-2]*t
+            i+=1
+            res=tmp+res
+            num=num//10
+        return res
 
 
         
