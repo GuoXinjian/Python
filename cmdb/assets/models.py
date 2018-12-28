@@ -60,7 +60,7 @@ class Server(models.Model):
         ('manual', '手工录入'),
     )
 
-    asset = models.OneToOneField('Asset')  # 非常关键的一对一关联！
+    asset = models.OneToOneField('Asset',on_delete=models.CASCADE)  # 非常关键的一对一关联！
     sub_asset_type = models.SmallIntegerField(choices=sub_asset_type_choice, default=0, verbose_name="服务器类型")
     created_by = models.CharField(choices=created_by_choice, max_length=32, default='auto', verbose_name="添加方式")
     hosted_on = models.ForeignKey('self', related_name='hosted_on_server',
