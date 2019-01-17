@@ -52,4 +52,12 @@ class Solution:
                 tmp.append(s)
             else:
                 tmp.pop()
-        return 'Radiant' if 'R' in tmp else 'Dire'
+        if not tmp:
+            return 'Radiant' if senate[0]=='R' else 'Dire'
+        else:
+            return 'Radiant' if 'R' in tmp else 'Dire'
+
+s=Solution()
+senate='DDRRR'
+p = s.predictPartyVictory(senate)
+print(p)
