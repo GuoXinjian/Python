@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cj!s8@zy76hl^sxn#4-%_=qeg$3r(wdcpy7hj3j9hhd*4t&8h2'
+SECRET_KEY = '2i7vp2!e8sig!*u!^qtb*3#nca3$9&^8zx4k_0)@0u=6w5zldy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'login',
-    'captcha',
+    'blog',
+    'DjangoUeditor',
 ]
 
 MIDDLEWARE = [
@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
-        'NAME': 'mysite',
-        'USER': 'root',
-        'PASSWORD': 'guo3625202123',
-        'HOST':'132.232.77.200',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mysite',
+            'USER': 'root',
+            'PASSWORD': 'guo3625202123',
+            'HOST': '132.232.77.200',
+            'PORT': '3306',
     }
 }
 
@@ -125,6 +125,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+#这个是设置静态文件夹目录的路径
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+#设置文件上传路径，图片上传、文件上传都会存放在此目录里
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
