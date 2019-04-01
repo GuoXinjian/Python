@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['GUI.py'],
-             pathex=['D:\\KTS\\spider\\barrage'],
+             pathex=['D:\\Python\\GUI'],
              binaries=[],
              datas=[],
              hiddenimports=[],
