@@ -1,0 +1,77 @@
+开始
+获取kuaishou用户列表： 2018-10-11 15:17:50
+已抓取kuaishouVideo数据： 2018-10-11 15:17:51
+kuaishouVideo数据已保存: 2018-10-11 15:18:10
+获取toutiao用户列表： 2018-10-11 15:18:10
+已抓取toutiaoUserInfo数据： 2018-10-11 15:18:10
+toutiaoUserInfo数据已保存: 2018-10-11 15:18:29
+已抓取toutiaoArticle数据： 2018-10-11 15:18:29
+toutiaoArticle数据已保存: 2018-10-11 15:18:48
+获取youku用户列表： 2018-10-11 15:18:48
+ERROR:root:'NavigableString' object has no attribute 'get'
+Traceback (most recent call last):
+  File "/root/Desktop/Spider_KTS_Linux/youKu.py", line 62, in spider
+    title =videoCode[i].find('div', attrs={'class': 'v-meta-title'}).contents[0].get('title')
+  File "/usr/local/lib/python3.6/dist-packages/bs4/element.py", line 797, in __getattr__
+    self.__class__.__name__, attr))
+AttributeError: 'NavigableString' object has no attribute 'get'
+已抓取youkuUserInfo数据： 2018-10-11 15:18:48
+youkuUserInfo数据已保存: 2018-10-11 15:19:08
+已抓取youkuVideo数据： 2018-10-11 15:19:08
+youkuVideo数据已保存: 2018-10-11 15:19:26
+获取xigua用户列表： 2018-10-11 15:19:26
+已抓取xiguaUserInfo数据： 2018-10-11 15:19:27
+xiguaUserInfo数据已保存: 2018-10-11 15:19:45
+已抓取xiguaVideo数据： 2018-10-11 15:19:45
+xiguaVideo数据已保存: 2018-10-11 15:20:04
+获取chushou用户列表： 2018-10-11 15:20:04
+已抓取chushouUserInfo数据： 2018-10-11 15:20:06
+chushouUserInfo数据已保存: 2018-10-11 15:20:24
+已抓取chushouVideo数据： 2018-10-11 15:20:24
+chushouVideo数据已保存: 2018-10-11 15:20:42
+已抓取chushouNews数据： 2018-10-11 15:20:42
+chushouNews数据已保存: 2018-10-11 15:21:01
+获取weibo用户列表： 2018-10-11 15:21:01
+开始抓取微博个人信息： 2018-10-11 15:21:01
+已抓取weiboUserInfo数据： 2018-10-11 15:21:03
+weiboUserInfo数据已保存: 2018-10-11 15:21:22
+开始抓取微博内容数据： 2018-10-11 15:21:22
+抓取每个博主前5页的微博内容
+已抓取weiboStatus数据： 2018-10-11 15:21:44
+weiboStatus数据已保存: 2018-10-11 15:22:03
+获取wanjia用户列表： 2018-10-11 15:22:03
+开始抓取玩加文章数据： 2018-10-11 15:22:03
+抓取最近20条用户动态
+已抓取wanjia数据： 2018-10-11 15:22:14
+wanjia数据已保存: 2018-10-11 15:22:33
+获取nga用户列表： 2018-10-11 15:22:33
+开始抓取NGA文章数据： 2018-10-11 15:22:33
+抓取最近35条用户动态
+已抓取nga数据： 2018-10-11 15:22:33
+nga数据已保存: 2018-10-11 15:22:52
+获取tieba用户列表： 2018-10-11 15:22:52
+开始抓取贴吧文章数据： 2018-10-11 15:22:52
+抓取最近20条用户动态
+已抓取tieba数据： 2018-10-11 15:22:53
+tieba数据已保存: 2018-10-11 15:23:13
+获取weishi用户列表： 2018-10-11 15:23:13
+开始抓取weishi数据： 2018-10-11 15:23:13
+抓取最近9条用户动态
+已抓取weishiUserInfo数据： 2018-10-11 15:23:15
+weishiUserInfo数据已保存: 2018-10-11 15:23:33
+已抓取weishiVideoInfo数据： 2018-10-11 15:23:33
+weishiVideoInfo数据已保存: 2018-10-11 15:23:52
+获取tengxunshipin用户列表： 2018-10-11 15:23:52
+已抓取tengxunshipin数据： 2018-10-11 15:23:53
+tengxunshipin数据已保存: 2018-10-11 15:24:12
+获取bilibili用户列表： 2018-10-11 15:24:12
+开始抓取bilibili内容数据： 2018-10-11 15:24:12
+抓取前25个视频
+已抓取bilibili数据： 2018-10-11 15:24:12
+bilibili数据已保存: 2018-10-11 15:24:30
+获取hupu用户列表： 2018-10-11 15:24:30
+开始抓取hupu文章数据： 2018-10-11 15:24:30
+抓取最近40条用户动态
+已抓取hupu数据： 2018-10-11 15:24:31
+hupu数据已保存: 2018-10-11 15:24:50
+本次抓取结束
