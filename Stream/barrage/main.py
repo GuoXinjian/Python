@@ -26,6 +26,8 @@ class InfoWidget(QtWidgets.QWidget):
 class MyWidget(QtWidgets.QWidget):
     def __init__(self,parent=None):
         QtWidgets.QWidget.__init__(self,parent)
+
+        self.setFixedSize(600,400)
         Roomid = QtWidgets.QLabel(u'房间号')
         Infowidget = InfoWidget()
         layout = QtWidgets.QHBoxLayout()
