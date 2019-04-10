@@ -11,41 +11,44 @@ sheet_chat.append(['NickName','Content','Time'])
 sheet_noble.append(['NobleNum','Time'])
 
 def pp(msg):
-    print(msg.encode(sys.stdin.encoding, 'ignore').
-        decode(sys.stdin.encoding))
+        print(msg.encode(sys.stdin.encoding, 'ignore').decode(sys.stdin.encoding))
 rid = input('input RoomId: ')
 dmc = DanMuClient('https://www.douyu.com/%s'%rid)
 if not dmc.isValid(): print('Url not valid')
 
 @dmc.danmu
 def danmu_fn(msg):
-    pp('[Chat][%s] %s' % (msg['NickName'], msg['Content']))
-    sheet_chat.append([msg['NickName'], msg['Content'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+        # print(msg)
+        pp('[Chat][%s] %s' % (msg['NickName'], msg['Content']))
+        sheet_chat.append([msg['NickName'], msg['Content'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
     
 
-# @dmc.gift
-# def gift_fn(msg):
-#     pp('[Gift][%s] sent a gift!' % msg['NickName'])
+@dmc.gift
+def gift_fn(msg):
+        pp('[Gift][%s] sent a gift!' % msg['NickName'])
 
 @dmc.bggift
 def bggift_fn(msg):
-    pp('[Gift][%s] sent %s %s %s!' % (msg['sn'],msg['dn'],msg['gc'],msg['gn']))
+        pp('[Gift][%s] sent %s %s %s!' % (msg['sn'],msg['dn'],msg['gc'],msg['gn']))
 
 @dmc.noble
 def noble_fn(msg):
-    print('[Noble]: %s'%msg['vn'])
-    sheet_noble.append([msg['vn'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+        print('[Noble]: %s'%msg['vn'])
+        msg['list'] = msg['list'].replace('@A=', ':').replace('/', ',')
+        print(msg)
+        sheet_noble.append([msg['vn'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
-# @dmc.bet
-# def bet_fn(msg):
-#         msg['qril'] = msg['qril'].replace('@A=', ':').replace('/', ',')
-#         print(msg)
+@dmc.bet
+def bet_fn(msg):
+        msg['qril'] = msg['qril'].replace('@A=', ':').replace('/', ',')
+        print(msg)
 
 
 
-# @dmc.other
-# def other_fn(msg):
-#     print(msg)
+@dmc.other
+def other_fn(msg):
+        print(msg)
+
 
 dmc.start(blockThread = True)
 filename=input('输入文件名：')
