@@ -23,6 +23,9 @@ class InfoWidget(QtWidgets.QWidget):
 
 
 
+
+
+
 class MyWidget(QtWidgets.QWidget):
     def __init__(self,parent=None):
         QtWidgets.QWidget.__init__(self,parent)
