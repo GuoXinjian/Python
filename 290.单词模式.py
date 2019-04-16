@@ -55,5 +55,5 @@ class Solution:
                 if d.get(key) != value:
                     return False
         return True
-s=Solution().wordPattern("abba","dog dog dog dog")
-print(s)
+# s=Solution().wordPattern("abba","dog dog dog dog")
+# print(s)
