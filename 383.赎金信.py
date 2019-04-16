@@ -30,5 +30,12 @@
 #
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        
+        magazine=list(magazine)
+        for r in ransomNote:
+            try:
+                magazine.remove(r)
+            except:
+                return False
+        return True
+
 
