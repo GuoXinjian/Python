@@ -23,7 +23,28 @@
 # 
 # 
 #
+def toint(x):
+    if x:
+        return int(x)
+    else:
+        return 0
 class Solution:
+
     def addStrings(self, num1: str, num2: str) -> str:
         
+        res=''
+        if len(num1)<=len(num2):
+            num1,num2=num2,num1
+        r=0
+        while num1:
+            t=toint(num2[-1:])+toint(num1[-1:])
+            res=str((t%10+r)%10)+res
+            r=(t+r)//10
+            num2=num2[:-1]
+            num1=num1[:-1]
+        if r!=0:
+            res=str(r)+res
+        return res
+s=Solution().addStrings('9','99')
+print(s)
 
