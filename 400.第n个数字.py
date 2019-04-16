@@ -42,5 +42,17 @@
 #
 class Solution:
     def findNthDigit(self, n: int) -> int:
-        
-
+        t=1
+        while n>9*10**(t-1)*t:
+            n-=9*10**(t-1)*t
+            t+=1
+        # print(n,t)
+        count=n//t
+        r=n%t
+        if r:
+            res=10**(t-1)+count
+        else:
+            res=10**(t-1)+count-1
+        return int(str(res)[r-1])
+s=Solution().findNthDigit(100)
+print(s)
