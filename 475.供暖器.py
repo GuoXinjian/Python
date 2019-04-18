@@ -44,6 +44,27 @@
 # 
 #
 class Solution:
-    def findRadius(self, houses: List[int], heaters: List[int]) -> int:
-        
-
+    def findRadius(self, houses: 'List[int]', heaters: 'List[int]') -> int:
+        houses.sort()
+        heaters.sort()
+        res=[]
+        i=0
+        j=0
+        while i < len(houses):
+            tmp=[]
+            dic={}
+            while j < len(heaters):
+                l=heaters[j]-houses[i]
+                tmp.append(abs(l))
+                if abs(l) not in dic:
+                    dic[abs(l)]=j
+                if l>=0:
+                    break
+                else:
+                    j+=1
+            i+=1
+            res.append(min(tmp))
+            j=dic[min(tmp)]
+        return max(res)
+s=Solution().findRadius([1,5],[2])
+print(s)
