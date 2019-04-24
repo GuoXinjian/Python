@@ -58,8 +58,80 @@
 # 
 # 
 #
+# class Solution:
+#     def orangesRotting(self, grid: 'List[List[int]]') -> int:
+        # from copy import deepcopy
+        # bad=[]
+        # good=[]
+        # for i in range(len(grid)):
+        #     for j in range(len(grid[0])):
+        #         if grid[i][j]==2:
+        #             bad.append([i,j])
+        #         elif grid[i][j]==1:
+        #             good.append([i,j])
+        # res=0
+        # while True:
+        #     change=0
+        #     if good:
+        #         tmp_bad=deepcopy(bad)
+        #         tmp_good=deepcopy(good)
+        #         for b in tmp_bad:
+        #             T=[[b[0]-1,b[1]],[b[0]+1,b[1]],[b[0],b[1]-1],[b[0],b[1]+1]]
+        #             for t in T:
+        #                 if t in good:
+        #                     good.remove(t)
+        #                     bad.append(t)
+        #                     change=1
+        #     if change==1:
+        #         res+=1
+        #     if change==0:
+        #         if not good:
+        #             return res
+        #         else:
+        #             return -1
+
 class Solution:
-    def orangesRotting(self, grid: List[List[int]]) -> int:
-        while True:
+    def orangesRotting(self, grid: 'List[List[int]]') -> 'int':
+        row, col = len(grid), len(grid[0])
+        newturn = []
+        # 扫描所有的烂橘子
+        y = 0
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == 2:
+                    newturn.append((r,c))
+                elif grid[r][c] == 1:
+                    y += 1
+        if y==0:
+            return 0
+        elif y>0 and len(newturn)==0:
+            return -1
         
+        cnt = 0
+        while len(newturn)>0:
+            cnt += 1
+            nn = set()
+            for r,c in newturn:
+                if r>0 and grid[r-1][c]==1:
+                    grid[r-1][c] = 2
+                    nn.add((r-1,c))
+                if r<row-1 and grid[r+1][c]==1:
+                    grid[r+1][c] = 2
+                    nn.add((r+1,c))
+                if c>0 and grid[r][c-1]==1:
+                    grid[r][c-1] = 2
+                    nn.add((r,c-1))
+                if c<col-1 and grid[r][c+1]==1:
+                    grid[r][c+1] = 2
+                    nn.add((r,c+1))
+            newturn = nn
+            # print(newturn)
+            
+        for rs in grid:
+            for e in rs:
+                if e == 1:
+                    return -1
+        return cnt -1
+# s=Solution().orangesRotting([[2,1,1],[1,1,0],[0,1,1]])
+# print(s)
 

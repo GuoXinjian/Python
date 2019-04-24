@@ -55,12 +55,20 @@ class Solution:
             return False
         else:
             s=S//3
-            for i in range(len(A)):
-                if sum(A[:i])==s:
-                    for j in range(len(A[i:])):
-                        if sum(A[i:i+j])==s:
-                            return True
+            i=0
+            j=len(A)-1
+            while i<len(A):
+                t1=sum(A[:i])
+                if t1!=s:
+                    i+=1
+                else:
+                    break
+            while j>i:
+                t2=sum(A[j:])
+                if t2!=s:
+                    j-=1
+                else:
+                    return True
         return False
-
-s=Solution().canThreePartsEqualSum([0,2,1,-6,6,-7,9,1,2,0,1])
-print(s)
+# s=Solution().canThreePartsEqualSum([18,12,-18,18,-19,-1,10,10])
+# print(s)
