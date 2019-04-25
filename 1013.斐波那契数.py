@@ -53,22 +53,25 @@ class Solution:
         S = sum(A)
         if S%3!=0:
             return False
-        else:
-            s=S//3
-            i=0
-            j=len(A)-1
-            while i<len(A):
-                t1=sum(A[:i])
-                if t1!=s:
-                    i+=1
-                else:
-                    break
-            while j>i:
-                t2=sum(A[j:])
-                if t2!=s:
-                    j-=1
-                else:
-                    return True
+        l=len(A)
+        s=S//3
+        tmp=A[0]
+        i=1
+        j=0
+        while i<l:
+            if tmp==s:
+                j=i
+                break
+            else:
+                tmp+=A[i]
+                i+=1
+        if j==0:return False
+        tmp=0
+        while j<l:
+            tmp+=A[j]
+            j+=1
+            if tmp==s:
+                return True
         return False
-# s=Solution().canThreePartsEqualSum([18,12,-18,18,-19,-1,10,10])
-# print(s)
+s=Solution().canThreePartsEqualSum([12,-4,16,-5,9,-3,3,8,0])
+print(s)
