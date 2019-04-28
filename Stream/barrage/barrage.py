@@ -5,11 +5,12 @@ from danmu import DanMuClient
 
 
 wb=openpyxl.Workbook()
-sheet_chat=wb.create_sheet('Chat')
-sheet_noble=wb.create_sheet('Noble')
+sheet_chat = wb.create_sheet('Chat')
+sheet_noble= wb.create_sheet('Noble')
+sheet_gift = wb.create_sheet('Gift')
 sheet_chat.append(['NickName','Content','Time'])
 sheet_noble.append(['NobleNum','Time'])
-
+sheet_gift.append(['NickName','Giftid','Count','Time'])
 def pp(msg):
         print(msg.encode(sys.stdin.encoding, 'ignore').decode(sys.stdin.encoding))
 rid = input('input RoomId: ')
@@ -25,23 +26,25 @@ def danmu_fn(msg):
 
 @dmc.gift
 def gift_fn(msg):
+        # print(msg)
         pp('[Gift][%s] sent a gift!' % msg['NickName'])
+        sheet_gift.append([msg['NickName'],msg['gfid'],msg['gfcnt'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
 @dmc.bggift
 def bggift_fn(msg):
-        pp('[Gift][%s] sent %s %s %s!' % (msg['sn'],msg['dn'],msg['gc'],msg['gn']))
+        pp('[BGGF][%s] sent %s %s %s!' % (msg['sn'],msg['dn'],msg['gc'],msg['gn']))
 
 @dmc.noble
 def noble_fn(msg):
         print('[Noble]: %s'%msg['vn'])
         msg['list'] = msg['list'].replace('@A=', ':').replace('/', ',')
-        print(msg)
+        # print(msg)
         sheet_noble.append([msg['vn'],datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
 @dmc.bet
 def bet_fn(msg):
         msg['qril'] = msg['qril'].replace('@A=', ':').replace('/', ',')
-        print(msg)
+        # print(msg)
 
 
 
