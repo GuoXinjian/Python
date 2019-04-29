@@ -1,9 +1,11 @@
 from tkinter import *
-from tkinter import ttk,filedialog
-import time
+from tkinter import ttk,filedialog,messagebox
+import time,datetime
 import openpyxl
 from Models import *
 import sqlalchemy
+import pymysql
+from pyecharts import Line
 
 
 root = Tk()
@@ -12,7 +14,39 @@ root.geometry('300x200')
 today = time.strftime('%Y-%m-%d',time.localtime(time.time()))
 starttime=today
 endtime = '2019-03-23'
+def GetTimeline(start,end,time_level):
+    time_level=time_level
 
+    if not start:
+        starttime=datetime.datetime.now().strftime('%Y-%m-%d')
+        starttime=datetime.datetime.strptime(starttime,'%Y-%m-%d')
+        starttime=starttime+datetime.timedelta(days=-1,hours=5)
+    elif len(start)==10:
+        starttime=datetime.datetime.strptime(start,'%Y-%m-%d')
+    elif len(start)==19:
+        starttime=datetime.datetime.strptime(start,'%Y-%m-%d %H:%M:%S')
+    if not end:
+        endtime = starttime + datetime.timedelta(days=1)
+    elif len(start)==10:
+        endtime=datetime.datetime.strptime(end,'%Y-%m-%d')
+    elif len(start)==19:
+        endtime=datetime.datetime.strptime(end,'%Y-%m-%d %H:%M:%S')
+    endtime+=datetime.timedelta(minutes= (time_level if endtime.minute//time_level else 0))
+    str_starttime=starttime.strftime('%Y-%m-%d %H:%M:%S')
+    str_endtime=endtime.strftime('%Y-%m-%d %H:%M:%S')
+
+    print(str_starttime)
+    print(str_endtime)
+
+    timeline=[]
+    t=starttime + datetime.timedelta(minutes=15 if starttime.minute%time_level else time_level)
+    while t < endtime:
+        timeline.append(str(t.day)+'日'+(str(t.hour).zfill(2)+':'+str(t.minute//time_level*time_level).zfill(2)))
+        t=t+datetime.timedelta(minutes=time_level)
+    fdaytime=(starttime.hour*60+starttime.minute)//time_level+ (1 if starttime.minute%time_level else 0)
+    daytime=60*24//time_level
+
+    return {'starttime':starttime,'str_starttime':str_starttime,'endtime':endtime,'str_endtime':str_endtime,'timeline':timeline,'fdaytime':fdaytime,'daytime':daytime,'time_level':time_level}
 
 
 def douyu():
@@ -22,7 +56,7 @@ def douyu():
         DouyuModel.rid==int(roomidframe.get()),
         DouyuModel.create_time.between(starttimeframe.get(),endtimeframe.get())
         )).all()
-    return ret
+    return ret,ret[0].nn
 
 def huya():
     Session = sessionmaker(bind=ENGINE)
@@ -34,7 +68,7 @@ def huya():
     print(len(ret))
     # for r in ret:
     #     print(r.nick)
-    return ret
+    return ret,ret[0].nick
 def egame():
     Session = sessionmaker(bind=ENGINE)
     session = Session()
@@ -42,7 +76,7 @@ def egame():
         EgameModel.anchor_id==int(roomidframe.get()),
         EgameModel.create_time.between(starttimeframe.get(),endtimeframe.get())
         )).all()
-    return ret
+    return ret,ret[0].anchor_name
 def bilibiliLive():
     Session = sessionmaker(bind=ENGINE)
     session = Session()
@@ -50,7 +84,7 @@ def bilibiliLive():
         BilibiliLiveModel.roomid==int(roomidframe.get()),
         BilibiliLiveModel.create_time.between(starttimeframe.get(),endtimeframe.get())
         )).all()
-    return ret
+    return ret,ret[0].uname
 
 
 
@@ -58,17 +92,22 @@ def bilibiliLive():
 
 
 def clickMe():
-    file_path = filedialog.asksaveasfilename(defaultextension = '.xls')
+    file_path = filedialog.asksaveasfilename(defaultextension = '.xlsx')
     for p,d in platformdict.items():
         if platformChosen.get()==p:
-            data=d()
+            ret=d()
+            data=ret[0]
+            title = ret[1]
     print(file_path,starttimeframe.get(),endtimeframe.get())
-    print(len(data))
+    print(title,len(data))
     if len(data)==0:
         message = messagebox.showinfo(title='错误',message='未能获取到数据')
+        # pass
     else:
         wb = openpyxl.Workbook()
-        ws = wb.create_sheet('%s_%s_%s-%s'%(platformChosen.get(),roomidframe.get(),starttimeframe.get(),endtimeframe.get()))
+        name= '%s_%s_%s-%s'%(platformChosen.get(),roomidframe.get(),starttimeframe.get(),endtimeframe.get())
+        ws = wb.create_sheet(name.replace(':','_'))
+        
         keys=[]
         for k,v in vars(data[0]).items():
             keys.append(k)
@@ -80,6 +119,42 @@ def clickMe():
                 value.append(str(v[-1]))
             ws.append(value)
         wb.save(file_path)
+
+
+        timedata = GetTimeline(starttimeframe.get(),endtimeframe.get(),15)
+        timeline=timedata['timeline']
+        values=[0]*len(timedata['timeline'])
+        i=0
+        while i < len(data):
+            if data[i].create_time.day-timedata['starttime'].day==0:
+                seq = (data[i].time_scale//timedata['time_level'])-timedata['fdaytime']
+                # print(seq,i)
+            else:
+                seq = data[i].time_scale//timedata['time_level'] - timedata['fdaytime']+(data[i].create_time.day-timedata['starttime'].day)*timedata['daytime']
+            try:
+                if platformChosen.get() == '虎牙':
+                    values[seq]=data[i].totalCount
+                if platformChosen.get() == '斗鱼':
+                    values[seq]=data[i].ol
+                if platformChosen.get() == '企鹅':
+                    values[seq]=data[i].online
+                if platformChosen.get() == 'B站直播':
+                    values[seq]=data[i].online
+            except:
+                pass
+            try:
+                if values[seq-1]==0 and values[seq]!=0 and values[seq-2]!=0:
+                    values[seq-1]=values[seq-2]
+            except:
+                pass
+            
+            # print(values)
+            i+=1
+        line = Line(title)
+        line.add(title,timedata['timeline'],values,area_opacity=0.4,is_lable_show=False)
+        # print()
+        line.render(file_path[:-5]+'.html')
+        message = messagebox.showinfo(title='成功',message='已保存')
 
 
 platformNow = StringVar()
