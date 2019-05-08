@@ -6,6 +6,7 @@ from Models import *
 import sqlalchemy
 import pymysql
 from pyecharts import Line
+import pyecharts,pyecharts_snapshot,jupyter_echarts_pypkg,jinja2
 
 
 root = Tk()
@@ -150,7 +151,7 @@ def clickMe():
             
             # print(values)
             i+=1
-        line = Line(title)
+        line = Line(title,"%s_%s"%(starttimeframe.get(),endtimeframe.get()),width=1920,height=1080)
         line.add(title,timedata['timeline'],values,area_opacity=0.4,is_lable_show=False)
         # print()
         line.render(file_path[:-5]+'.html')
