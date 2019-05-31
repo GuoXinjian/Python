@@ -22,7 +22,9 @@ def recognize(v):
         return 1
 
     # 判断2, 倒数2位求和大于25，并且是倒数第5位的2倍以上
-    if ( (sum(v[endIndex - 1:endIndex]) > 25) and (v[endIndex] > v[endIndex-4] * 2) ):
+    a=sum(v[endIndex - 1:])
+    b=v[endIndex] - v[endIndex-4] * 2
+    if ( (sum(v[endIndex - 1:]) > 25) and (v[endIndex] > v[endIndex-4] * 2) ):
         return 2
 
     # 判断3, 前3增后3降，7~9,15~16小于5（求和10）
@@ -106,7 +108,7 @@ def chopchr(img):
             l=r
         r+=1
     print(lis)
-    
+
     for l in lis:
         oneimg=img[:,l[0]:l[1]]
         h,w=oneimg.shape
@@ -394,3 +396,6 @@ if __name__=='__main__':
     cap = cv2.VideoCapture(3)
 
     play(cap)
+    # v=[9, 11, 13, 8, 6, 5, 4, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 4, 3, 3, 13, 13, 13]
+    # r=recognize(v)
+    # print(r)
