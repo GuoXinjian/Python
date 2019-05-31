@@ -14,11 +14,11 @@ def recognize(v):
     endIndex = len(v)-1
 
     # 判断0, 前3增 后3降，12~18相等小于等于6（总和35）
-    if( (v[startIndex] < v[startIndex+1]) and (v[startIndex+1] <= v[startIndex+2]) and (v[endIndex] < v[endIndex-1]) and (v[endIndex-1] <= v[endIndex-2]) and (sum(v[startIndex+11:startIndex+15]) <= 35) ):
+    if( (v[startIndex] < v[startIndex+1]) and (v[startIndex+1] <= v[startIndex+2]) and (v[endIndex] < v[endIndex-1]) and (v[endIndex-1] <= v[endIndex-2]) and (sum(v[startIndex+11:startIndex+16]) <= 35) ):
         return 0
 
     # 判断1, 倒数5位总和小于等于20
-    if (sum(v[endIndex-4:endIndex]) <= 20):
+    if (sum(v[endIndex-4:endIndex+1]) <= 20):
         return 1
 
     # 判断2, 倒数2位求和大于25，并且是倒数第5位的2倍以上
@@ -31,43 +31,43 @@ def recognize(v):
     if ( (v[startIndex] < v[startIndex + 1]) and (v[startIndex + 1] <= v[startIndex + 2])
             and (v[endIndex] < v[endIndex - 1]) and (v[endIndex - 1] <= v[endIndex - 2])
             and (sum(v[startIndex + 7:startIndex + 8]) < 10)
-            and (sum(v[startIndex + 15:startIndex + 16]) < 10) ):
+            and (sum(v[startIndex + 15:startIndex + 17]) < 10) ):
         return 3
 
     # 判断4, 倒数3小于5，倒数6~7相等大于15
-    if ( (max(v[endIndex-2:endIndex]) < 5) and (min(v[endIndex-7:endIndex-6]) > 12) ):
+    if ( (max(v[endIndex-2:]) < 5) and (min(v[endIndex-7:endIndex-5]) > 12) ):
         return 4
 
     # 判断5, 前3相等大于10小于14
-    if ( (max(v[startIndex:startIndex+2]) < 14) and (min(v[startIndex:startIndex+2]) > 10) ):
+    if ( (max(v[startIndex:startIndex+3]) < 14) and (min(v[startIndex:startIndex+3]) > 10) ):
         return 5
 
     # 判断6, 前3增后3降，7~9小于5,15~16大于5（求和10）
     if ((v[startIndex] < v[startIndex + 1]) and (v[startIndex + 1] <= v[startIndex + 2])
             and (v[endIndex] < v[endIndex - 1]) and (v[endIndex - 1] <= v[endIndex - 2])
-            and (sum(v[startIndex + 7:startIndex + 8]) < 10)
-            and (sum(v[startIndex + 15:startIndex + 16]) > 10)):
+            and (sum(v[startIndex + 7:startIndex + 9]) < 10)
+            and (sum(v[startIndex + 15:startIndex + 17]) > 10)):
         return 6
 
 
     # 判断7, 前3相等大于14
-    if ((max(v[startIndex:startIndex + 2]) < 18) and (min(v[startIndex:startIndex + 2]) > 14)):
+    if ((max(v[startIndex:startIndex + 3]) < 18) and (min(v[startIndex:startIndex + 3]) > 14)):
         return 7
 
 
     # 判断8, 前3增后3降，7~9,15~16大于5（求和10）
     if ((v[startIndex] < v[startIndex + 1]) and (v[startIndex + 1] <= v[startIndex + 2])
             and (v[endIndex] < v[endIndex - 1]) and (v[endIndex - 1] <= v[endIndex - 2])
-            and (sum(v[startIndex + 7:startIndex + 8]) > 10)
-            and (sum(v[startIndex + 15:startIndex + 16]) > 10)):
+            and (sum(v[startIndex + 7:startIndex + 9]) > 10)
+            and (sum(v[startIndex + 15:startIndex + 17]) > 10)):
         return 8
 
 
     # 判断9, 前3增后3降，7~9大于5,15~16小于5（求和10）
     if ((v[startIndex] < v[startIndex + 1]) and (v[startIndex + 1] <= v[startIndex + 2])
             and (v[endIndex] < v[endIndex - 1]) and (v[endIndex - 1] <= v[endIndex - 2])
-            and (sum(v[startIndex + 7:startIndex + 8]) > 10)
-            and (sum(v[startIndex + 15:startIndex + 16]) < 10)):
+            and (sum(v[startIndex + 7:startIndex + 9]) > 10)
+            and (sum(v[startIndex + 15:startIndex + 17]) < 10)):
         return 9
 
 
