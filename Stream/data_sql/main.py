@@ -2,11 +2,11 @@ from tkinter import *
 from tkinter import ttk,filedialog,messagebox
 import time,datetime
 import openpyxl
-from Models import *
+from dao import *
 import sqlalchemy
 import pymysql
-from pyecharts import Line
-import pyecharts,pyecharts_snapshot,jupyter_echarts_pypkg,jinja2
+# from pyecharts import Line
+# import pyecharts,pyecharts_snapshot,jupyter_echarts_pypkg,jinja2
 
 
 root = Tk()
@@ -53,39 +53,39 @@ def GetTimeline(start,end,time_level):
 def douyu():
     Session = sessionmaker(bind=ENGINE)
     session = Session()
-    ret = session.query(DouyuModel).filter(sqlalchemy.and_(
-        DouyuModel.rid==int(roomidframe.get()),
-        DouyuModel.create_time.between(starttimeframe.get(),endtimeframe.get())
+    ret = session.query(rp_douyu).filter(sqlalchemy.and_(
+        rp_douyu.rp_rid==int(roomidframe.get()),
+        rp_douyu.sys_createtime.between(starttimeframe.get(),endtimeframe.get())
         )).all()
-    return ret,ret[0].nn
+    return ret,ret[0].rp_uname
 
 def huya():
     Session = sessionmaker(bind=ENGINE)
     session = Session()
-    ret = session.query(HuyaModel).filter(sqlalchemy.and_(
-        HuyaModel.profileRoom==int(roomidframe.get()),
-        HuyaModel.create_time.between(starttimeframe.get(),endtimeframe.get())
+    ret = session.query(rp_huya).filter(sqlalchemy.and_(
+        rp_huya.rp_rid==int(roomidframe.get()),
+        rp_huya.sys_createtime.between(starttimeframe.get(),endtimeframe.get())
         )).all()
     print(len(ret))
     # for r in ret:
     #     print(r.nick)
-    return ret,ret[0].nick
+    return ret,ret[0].rp_uname
 def egame():
     Session = sessionmaker(bind=ENGINE)
     session = Session()
-    ret = session.query(EgameModel).filter(sqlalchemy.and_(
-        EgameModel.anchor_id==int(roomidframe.get()),
-        EgameModel.create_time.between(starttimeframe.get(),endtimeframe.get())
+    ret = session.query(rp_egame).filter(sqlalchemy.and_(
+        rp_egame.rp_uid==int(roomidframe.get()),
+        rp_egame.sys_createtime.between(starttimeframe.get(),endtimeframe.get())
         )).all()
-    return ret,ret[0].anchor_name
+    return ret,ret[0].rp_uname
 def bilibiliLive():
     Session = sessionmaker(bind=ENGINE)
     session = Session()
-    ret = session.query(BilibiliLiveModel).filter(sqlalchemy.and_(
-        BilibiliLiveModel.roomid==int(roomidframe.get()),
-        BilibiliLiveModel.create_time.between(starttimeframe.get(),endtimeframe.get())
+    ret = session.query(rp_bilibiliUserLive).filter(sqlalchemy.and_(
+        rp_bilibiliUserLive.rp_rid==int(roomidframe.get()),
+        rp_bilibiliUserLive.sys_createtime.between(starttimeframe.get(),endtimeframe.get())
         )).all()
-    return ret,ret[0].uname
+    return ret,ret[0].rp_uname
 
 
 
@@ -127,11 +127,11 @@ def clickMe():
         values=[0]*len(timedata['timeline'])
         i=0
         while i < len(data):
-            if data[i].create_time.day-timedata['starttime'].day==0:
-                seq = (data[i].time_scale//timedata['time_level'])-timedata['fdaytime']
+            if data[i].sys_createtime.day-timedata['starttime'].day==0:
+                seq = ((data[i].sys_createtime.hour*60+data[i].sys_createtime.minute)//timedata['time_level'])-timedata['fdaytime']
                 # print(seq,i)
             else:
-                seq = data[i].time_scale//timedata['time_level'] - timedata['fdaytime']+(data[i].create_time.day-timedata['starttime'].day)*timedata['daytime']
+                seq = (data[i].sys_createtime.hour*60+data[i].sys_createtime.minute)//timedata['time_level'] - timedata['fdaytime']+(data[i].sys_createtime.day-timedata['starttime'].day)*timedata['daytime']
             try:
                 if platformChosen.get() == '虎牙':
                     values[seq]=data[i].totalCount
@@ -151,10 +151,10 @@ def clickMe():
             
             # print(values)
             i+=1
-        line = Line(title,"%s_%s"%(starttimeframe.get(),endtimeframe.get()),width=1920,height=1080)
-        line.add(title,timedata['timeline'],values,area_opacity=0.4,is_lable_show=False)
-        # print()
-        line.render(file_path[:-5]+'.html')
+        # line = Line(title,"%s_%s"%(starttimeframe.get(),endtimeframe.get()),width=1920,height=1080)
+        # line.add(title,timedata['timeline'],values,area_opacity=0.4,is_lable_show=False)
+
+        # line.render(file_path[:-5]+'.html')
         message = messagebox.showinfo(title='成功',message='已保存')
 
 
