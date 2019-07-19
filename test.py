@@ -1,4 +1,20 @@
-import requests
+from sqlalchemy import Column, String, create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-res=requests.get('https://cgi.datamore.qq.com/datamore/smobac/player/index?page=1&page_size=20&start_date=2019-03-14&end_date=2019-06-12&sort_field=played&sort_dir=desc&season_id=all&export=0&acctype=qq&location=cn')
-print(res.content)
+# 创建对象的基类:
+Base = declarative_base()
+
+# 定义User对象:
+class User(Base):
+    # 表的名字:
+    __tablename__ = 'user'
+
+    # 表的结构:
+    id = Column(String(20), primary_key=True)
+    name = Column(String(20))
+
+# 初始化数据库连接:
+engine = create_engine('mysql+mysqlconnector://root:password@localhost:3306/test')
+# 创建DBSession类型:
+DBSession = sessionmaker(bind=engine)
